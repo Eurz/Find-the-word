@@ -9,7 +9,8 @@ export default class App {
     }
 
     init() {
-        this.addButtonsAction()
+        // this.addButtonsAction()
+        this.newGame()
     }
 
     addButtonsAction = () => {

@@ -1,8 +1,10 @@
 import { createWrapper } from '../functions/utils.js'
 
 export default class Keyboard {
-    constructor() {
+    constructor(word, subject) {
         this.keyboardLetters = 'AZERTYUIOPQSDFGHJKLMWXCVBN'.split('')
+        this.subject = subject
+        this.word = word
         this.keyboardContainer = createWrapper(
             'div',
             'keyboard-container',
@@ -26,7 +28,9 @@ export default class Keyboard {
             key.textContent = letter
 
             key.addEventListener('click', (e) => {
+                e.stopPropagation()
                 this.onDisableKey(e, letter)
+                this.subject.notify(this.word, letter)
             })
 
             keyboardWrapper.appendChild(key)

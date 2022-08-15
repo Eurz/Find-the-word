@@ -1,29 +1,20 @@
-import { createWrapper } from './functions/utils.js'
 import Keyboard from './components/Keyboard.js'
-import Letter from './components/Letter.js'
+import { KeyboardSubject, KeyObserver } from './subjects/KeyboardSubject.js'
+import Word from './components/Word.js'
 
 export default class Game {
     constructor(targetContainer) {
         this.root = targetContainer
-        this.secretWord = 'ANTICONSTI'.split('')
-        this.lettersWrapper = createWrapper(
-            'div',
-            'letters-display',
-            'letters-display'
-        )
+        this.word = new Word('ANTICONSTI')
 
-        this.keyboard = new Keyboard()
+        this.keyboardSubject = new KeyboardSubject()
+        this.keyboardObserver = new KeyObserver()
+        this.keyboardSubject.subscribe(this.keyboardObserver)
+
+        this.keyboard = new Keyboard(this.word, this.keyboardSubject)
     }
 
     render = () => {
-        const target = createWrapper('div', 'toto')
-        this.secretWord.forEach((letter) => {
-            const letterWrapper = new Letter(letter)
-            this.lettersWrapper.appendChild(letterWrapper)
-        })
-
-        this.root.append(this.lettersWrapper, this.keyboard.render())
-        // console.log(this.root)
-        // return target
+        this.root.append(this.word.render(), this.keyboard.render())
     }
 }
