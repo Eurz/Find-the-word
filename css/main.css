@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato&display=swap');
+
+:root {
+    --bg-opacity: 0.8;
+    --primary-bg: #1e4c86;
+    --secondary-bg: rgb(240, 195, 0);
+    --secondary-bg-hover: rgb(255, 209, 2);
+    --border-radius: 10x;
+
+    --secondary-text-color: #945911;
+}
+body {
+    font-family: 'Bebas Neue';
+    /* font-family: 'Lato'; */
+}
+
+/*   MAIN BLOC   */
+.container {
+    margin: 0 auto;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    align-items: center;
+}
+.main {
+    background-color: var(--primary-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+/*   HEADINGS   */
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+/*   NAV   */
+.nav-link {
+    flex-direction: row;
+    display: inline-flex;
+    padding: 5px 0;
+}
+.nav-link li {
+    margin: 0 10px;
+}
+
+/*   KEYBOARD   */
+.keyboard-container {
+}
+.keyboard {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    padding: 2px;
+}
+.keyboard .key {
+    width: 10%;
+    background-color: var(--secondary-bg);
+    margin: 1px;
+    padding-block: 8px;
+    color: var(--secondary-text-color);
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius);
+}
+.keyboard .key:hover {
+    font-weight: bold;
+    cursor: pointer;
+    background-color: var(--secondary-bg-hover);
+}
+
+/*  LETTERS   */
+.letters-display {
+    display: flex;
+    justify-content: center;
+    gap: 0.2rem;
+    padding: 1rem;
+    /* width: 80%; */
+    /* margin: 0 auto; */
+}
+.letter-item {
+    background-color: #fff;
+    font-size: 1rem;
+    width: 1.6em;
+    height: 2em;
+    /* padding: 0.5rem; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* font-size: 1rem; */
+    border-radius: var(--border-radius);
+}
+
+/*   BUTTONS   */
+.btn {
+    padding: 1rem;
+    border-radius: 0.5em;
+    border: none;
+    font-size: inherit;
+    cursor: pointer;
+    color: var(--secondary-text-color);
+    background-color: var(--secondary-bg);
+}
+
+.btn:hover {
+    background-color: var(--secondary-bg-hover);
+}
+
+/* @media screen and (min-width: 768px) {
+    .letter-item {
+        font-size: 4rem;
+    }
+}
+@media screen and (max-width: 576px) {
+    .letter-item {
+        font-size: 1.5rem;
+    }
+} */
