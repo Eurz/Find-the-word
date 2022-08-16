@@ -1,3 +1,5 @@
+import ScoreDisplay from '../components/ScoreDisplay.js'
+
 export class KeyboardSubject {
     constructor() {
         this.observers = []
@@ -11,14 +13,16 @@ export class KeyboardSubject {
         this.observers = this.observers.filter((obs) => obs !== observer)
     }
 
-    notify(word, letter) {
-        this.observers.forEach((observer) => observer.fire(word, letter))
+    notify(word, letter, scoreDisplayer) {
+        this.observers.forEach((observer) =>
+            observer.fire(word, letter, scoreDisplayer)
+        )
     }
 }
 
 export class KeyObserver {
     constructor() {}
-    fire(word, letter) {
+    fire(word, letter, scoreDisplayer) {
         const isLetterExist = word.findLetter(letter)
 
         if (isLetterExist) {
@@ -31,7 +35,16 @@ export class KeyObserver {
     }
 }
 
-export class SocreObserver {
+export class ScoreObserver {
     constructor() {}
-    fire(word, letter) {}
+
+    fire = (word, letter, scoreDisplayer) => {
+        const isLetterExist = word.findLetter(letter)
+        if (!isLetterExist) {
+            scoreDisplayer.updateScore()
+            // this.strokes--
+            // const test = document.querySelector('#life-counter')
+            // test.textContent = this.strokes
+        }
+    }
 }

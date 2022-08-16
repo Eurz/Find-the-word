@@ -1,17 +1,29 @@
 import { createWrapper } from '../functions/utils.js'
+import {
+    KeyboardSubject,
+    KeyObserver,
+    ScoreObserver,
+} from '../subjects/KeyboardSubject.js'
 
 export default class Keyboard {
-    constructor(word, subject) {
+    constructor(params) {
         this.keyboardLetters = 'ABCDEFGHIJKLMNOPQRST'.split('')
-        this.subject = subject
-        this.word = word
+        this.word = params.word
+        this.scoreDisplayer = params.scoreDisplayer
+
+        this.keyboardSubject = new KeyboardSubject()
+        this.keyboardObserver = new KeyObserver()
+        this.scoreObserver = new ScoreObserver()
+
+        this.keyboardSubject.subscribe(this.keyboardObserver)
+        this.keyboardSubject.subscribe(this.scoreObserver)
+
         this.keyboardContainer = createWrapper(
             'div',
             'keyboard-container',
             'keyboard'
         )
         this.currentLetter = ''
-        // this.render()
     }
 
     onDisableKey = (e) => {
@@ -22,7 +34,11 @@ export default class Keyboard {
     onClickKey = (e) => {
         e.stopPropagation()
         this.onDisableKey(e)
-        this.subject.notify(this.word, e.target.getAttribute('data-content'))
+        this.keyboardSubject.notify(
+            this.word,
+            e.target.getAttribute('data-content'),
+            this.scoreDisplayer
+        )
         this.onRemoveEvent(e)
     }
 
