@@ -2,7 +2,7 @@
 
 :root {
     --bg-opacity: 0.8;
-    --primary-bg: #1e4c86;
+    --primary-bg: rgba(43, 44, 170, 1);
     --secondary-bg: rgb(240, 195, 0);
     --secondary-bg-hover: rgb(255, 209, 2);
     --border-radius: 3px;
@@ -31,8 +31,11 @@ body {
     background-color: var(--primary-bg);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
+}
+.gameboard {
+    width: 100%;
 }
 /*   HEADINGS   */
 h1 {
@@ -77,7 +80,12 @@ h1 {
     cursor: pointer;
     background-color: var(--secondary-bg-hover);
 }
-
+.key.disabled,
+.key.disabled:hover {
+    background-color: #ccc;
+    color: rgb(126, 124, 124);
+    font-weight: normal;
+}
 /*  LETTERS   */
 .letters-display {
     display: flex;
@@ -100,6 +108,32 @@ h1 {
     border-radius: var(--border-radius);
 }
 
+/*   SCORE   */
+.score-display {
+    background-color: var(--secondary-bg);
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+}
+
+.score-bar {
+    height: 10px;
+    position: relative;
+    width: 120px;
+    margin: 10px auto;
+    background-color: #ffe086;
+}
+.score-bar::before {
+    content: '';
+    position: absolute;
+    width: 75%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: red;
+}
 /*   BUTTONS   */
 .btn {
     padding: 1rem;
