@@ -1,3 +1,4 @@
+import Keyboard from '../components/Keyboard.js'
 import ScoreDisplay from '../components/ScoreDisplay.js'
 
 export class KeyboardSubject {
@@ -13,16 +14,16 @@ export class KeyboardSubject {
         this.observers = this.observers.filter((obs) => obs !== observer)
     }
 
-    notify(word, letter, scoreDisplayer) {
+    notify(word, letter, scoreDisplayer, keyboard) {
         this.observers.forEach((observer) =>
-            observer.fire(word, letter, scoreDisplayer)
+            observer.fire(word, letter, scoreDisplayer, keyboard)
         )
     }
 }
 
 export class KeyObserver {
     constructor() {}
-    fire(word, letter, scoreDisplayer) {
+    fire(word, letter, scoreDisplayer, keyboard) {
         const isLetterExist = word.findLetter(letter)
 
         if (isLetterExist) {
@@ -31,6 +32,24 @@ export class KeyObserver {
                     word.updateLetter(letter, index)
                 }
             })
+
+            if (word.isWordRevealed() || scoreDisplayer.gameOver()) {
+                keyboard.disableKeyboard()
+                return
+            }
+            return
+        }
+
+        scoreDisplayer.updateScore()
+
+        if (word.isWordRevealed()) {
+            console.log('Mot trouvé')
+            return
+        }
+
+        if (scoreDisplayer.gameOver()) {
+            keyboard.disableKeyboard()
+            return
         }
     }
 }
@@ -40,11 +59,18 @@ export class ScoreObserver {
 
     fire = (word, letter, scoreDisplayer) => {
         const isLetterExist = word.findLetter(letter)
-        if (!isLetterExist) {
-            scoreDisplayer.updateScore()
-            // this.strokes--
-            // const test = document.querySelector('#life-counter')
-            // test.textContent = this.strokes
+
+        //
+        if (!scoreDisplayer.gameOver()) {
+            if (!isLetterExist) {
+                // scoreDisplayer.updateScore()
+                // this.strokes--
+                // const test = document.querySelector('#life-counter')
+                // test.textContent = this.strokes
+            }
+            return
         }
+
+        word.revealWord()
     }
 }
