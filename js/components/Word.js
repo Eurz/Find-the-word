@@ -13,17 +13,29 @@ export default class Word {
             'letters-display',
             'letters-display'
         )
-        this.findLetter('I')
+        this.letters = []
     }
 
     render() {
         this.secretWord.forEach((letter, index) => {
             const letterWrapper = new Letter(letter)
-            letterWrapper.setAttribute('data-index', index)
-            this.lettersWrapper.appendChild(letterWrapper)
+
+            this.letters.push(letter)
+            letterWrapper.fadeInLetter(index)
+
+            letterWrapper.addAttribute('data-index', index)
+
+            this.lettersWrapper.appendChild(letterWrapper.render())
         })
 
         return this.lettersWrapper
+    }
+
+    fadeInLetter = (Letter, coefficient) => {
+        Letter.classList.add('letter-effect')
+        setTimeout(() => {
+            Letter.classList.add('show')
+        }, 200 * coefficient)
     }
 
     findLetter(letter) {
@@ -31,20 +43,53 @@ export default class Word {
             return true
         }
         return false
-        // this.word.split('').forEach((l, index) => {})
     }
 
     updateLetter(letter, index) {
         const letters = Array.from(
             this.lettersWrapper.querySelectorAll('.letter-item')
         )
-
+        this.secretWord[index] = letter
         const element = letters.find((el) => {
             return el.getAttribute('data-index') == index
         })
 
+        // element.classList.add('letter-animate')
         element.textContent = letter
+        Letter.shakeLetter(element)
     }
+
+    isWordRevealed() {
+        const isWordRevealed = this.secretWord.every((el) => el !== '_')
+
+        return isWordRevealed
+    }
+
+    getMessage() {
+        // document.querySelector('#score-display').innerHTML =
+        //     '<div class="score-message ">Vous avez trouvé le mot caché</div>'
+        // setTimeout(() => {
+        //     const div = document.querySelector('.score-message')
+        //     div.classList.add('anime')
+        // }, 300)
+        // return 'Bravo vous avez gagné'
+    }
+
+    revealWord() {
+        const words = Array.from(
+            document.querySelectorAll('#letters-display .letter-item')
+        )
+        console.log(this.secretWord)
+
+        words.forEach((word, index) => {
+            // if (condition) {
+            word.textContent = this.word[index]
+            Letter.shakeLetter(word)
+            this.updateLetter(word.textContent, index)
+            // }
+        })
+    }
+
     get getWord() {
         return this.word
     }

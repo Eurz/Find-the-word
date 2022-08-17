@@ -6,25 +6,24 @@ import Game from './Game.js'
 export default class App {
     constructor() {
         this.gameContainer = document.querySelector('#game-container')
+        this.homeContainer = document.querySelector('.main')
     }
 
     init() {
         // this.addButtonsAction()
-        this.newGame()
+        this.startGame()
     }
 
     addButtonsAction = () => {
-        this.gameContainer.innerHTML = `<button class="btn" id="btn-start">Jouer</button>`
+        this.homeContainer.innerHTML = `<button class="btn" id="btn-start">Jouer</button>`
         const btnStart = document.querySelector('#btn-start')
-        btnStart.addEventListener('click', this.newGame)
+        btnStart.addEventListener('click', this.startGame)
     }
 
-    newGame = () => {
+    startGame = () => {
         const newGame = new Game(this.gameContainer)
         this.gameContainer.innerHTML = ''
         const renderGame = newGame.render()
-
-        // this.gameContainer.append(renderGame)
     }
 }
 

@@ -6,8 +6,8 @@ import ScoreDisplay from './components/ScoreDisplay.js'
 export default class Game {
     constructor(targetContainer) {
         this.root = targetContainer
-        this.word = new Word('BONJOUR')
-        this.maxScore = 5
+        this.word = new Word('POURTOUR')
+        this.maxScore = 3
         this.scoreDisplay = new ScoreDisplay(this.maxScore)
 
         this.paramsKeyboard = {

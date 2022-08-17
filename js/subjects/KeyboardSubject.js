@@ -43,7 +43,6 @@ export class KeyObserver {
         scoreDisplayer.updateScore()
 
         if (word.isWordRevealed()) {
-            console.log('Mot trouvé')
             return
         }
 
