@@ -5,39 +5,37 @@ export default class Word {
     constructor(word) {
         this.word = word
         this.secretWord = []
+
         for (let i = 0; i < this.word.length; i++) {
             this.secretWord.push('_')
         }
-        this.lettersWrapper = createWrapper(
+        const wrapper = createWrapper(
             'div',
             'letters-display',
             'letters-display'
         )
+        this.wordWrapper = wrapper
         this.letters = []
     }
 
     render() {
-        this.secretWord.forEach((letter, index) => {
-            const letterWrapper = new Letter(letter)
+        for (let i = 0; i < this.word.length; i++) {
+            const letterItem = new Letter('-')
+            this.letters.push(letterItem)
+            // letterItem.fadeInLetter(index)
+            letterItem.addAttribute('data-index', i)
 
-            this.letters.push(letter)
-            letterWrapper.fadeInLetter(index)
+            this.wordWrapper.appendChild(letterItem.render())
+        }
 
-            letterWrapper.addAttribute('data-index', index)
-
-            this.lettersWrapper.appendChild(letterWrapper.render())
-        })
-
-        return this.lettersWrapper
+        return this.wordWrapper
     }
 
-    fadeInLetter = (Letter, coefficient) => {
-        Letter.classList.add('letter-effect')
-        setTimeout(() => {
-            Letter.classList.add('show')
-        }, 200 * coefficient)
-    }
-
+    /**
+     *
+     * @param {String} letter - Letter to find in the word
+     * @returns Boolean
+     */
     findLetter(letter) {
         if (this.word.includes(letter)) {
             return true
@@ -45,18 +43,25 @@ export default class Word {
         return false
     }
 
-    updateLetter(letter, index) {
-        const letters = Array.from(
-            this.lettersWrapper.querySelectorAll('.letter-item')
-        )
-        this.secretWord[index] = letter
-        const element = letters.find((el) => {
-            return el.getAttribute('data-index') == index
-        })
+    /**
+     *
+     * @param {String} letter - Letter to display
+     * @param {Number} index - Index of letter object item
+     */
+    updateWord(letter) {
+        const wordSplit = this.word.split('')
+        let counter = 0
 
-        // element.classList.add('letter-animate')
-        element.textContent = letter
-        Letter.shakeLetter(element)
+        const letters = wordSplit.forEach((l, index) => {
+            if (l === letter) {
+                // console.log(index)
+                this.letters[index].setLetter = l
+                this.letters[index].shakeLetter(counter)
+
+                this.secretWord[index] = letter
+                counter++
+            }
+        })
     }
 
     isWordRevealed() {
@@ -76,18 +81,16 @@ export default class Word {
     }
 
     revealWord() {
-        const words = Array.from(
-            document.querySelectorAll('#letters-display .letter-item')
-        )
-        console.log(this.secretWord)
+        let counter = 0
 
-        words.forEach((word, index) => {
-            // if (condition) {
-            word.textContent = this.word[index]
-            Letter.shakeLetter(word)
-            this.updateLetter(word.textContent, index)
-            // }
+        const indexLetter = this.secretWord.forEach((letter, index) => {
+            if (letter === '_') {
+                this.letters[index].setLetter = this.word.split('')[index]
+                this.letters[index].shakeLetter(counter)
+                counter++
+            }
         })
+        console.log(indexLetter)
     }
 
     get getWord() {

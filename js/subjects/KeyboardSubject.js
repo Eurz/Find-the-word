@@ -27,11 +27,7 @@ export class KeyObserver {
         const isLetterExist = word.findLetter(letter)
 
         if (isLetterExist) {
-            word.getWord.split('').forEach((l, index) => {
-                if (l === letter) {
-                    word.updateLetter(letter, index)
-                }
-            })
+            word.updateWord(letter)
 
             if (word.isWordRevealed() || scoreDisplayer.gameOver()) {
                 keyboard.disableKeyboard()

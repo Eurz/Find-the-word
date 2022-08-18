@@ -3,13 +3,10 @@ import { createWrapper } from '../functions/utils.js'
 export default class Letter {
     constructor(letter) {
         this.letter = letter
-        const letterDiv = createWrapper('div', 'letter-item')
-        this.letterWrapper = letterDiv
+        this.setLetterWrapper()
         this.letterWrapper.textContent = this.letter
 
-        this.finalLetter = this.letterWrapper
-
-        this.render()
+        // this.render()
     }
 
     fadeInLetter = (coefficient) => {
@@ -19,20 +16,40 @@ export default class Letter {
         }, 200 * coefficient)
     }
 
-    static shakeLetter = (el) => {
+    shakeLetter = (coefficient) => {
+        this.letterWrapper.classList.add('letter-animate')
         const divEffect = createWrapper('div', 'letter-shake')
-        el.appendChild(divEffect)
+        this.letterWrapper.appendChild(divEffect)
 
-        setTimeout(() => {
-            divEffect.classList.add('letter-shake-go')
-        }, 200)
+        const animationDelay = 0.2 * coefficient
+        divEffect.style.animationDelay = `${animationDelay}s`
+        // setTimeout(() => {
+        //     divEffect.classList.add('letter-shake-go')
+        // }, 4000 * coefficient)
     }
 
     addAttribute(name, value) {
         this.letterWrapper.setAttribute(name, value)
     }
-    getLetter = () => {
+
+    get getLetter() {
         return this.letter
+    }
+    get getContent() {
+        return this.letter
+    }
+
+    set setLetter(letter) {
+        this.letterWrapper.textContent = letter
+        this.letter = letter
+    }
+    setLetterWrapper() {
+        if (this.letterWrapper === undefined) {
+            this.letterWrapper = createWrapper('div', 'letter-item')
+            return
+        }
+
+        return this.letterWrapper
     }
 
     render() {

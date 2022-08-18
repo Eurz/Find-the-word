@@ -6,7 +6,7 @@ import ScoreDisplay from './components/ScoreDisplay.js'
 export default class Game {
     constructor(targetContainer) {
         this.root = targetContainer
-        this.word = new Word('POURTOUR')
+        this.word = new Word('AABBCCDD'.toUpperCase())
         this.maxScore = 3
         this.scoreDisplay = new ScoreDisplay(this.maxScore)
 
